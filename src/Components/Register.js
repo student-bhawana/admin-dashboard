@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Form, Input, Select, Button, Row, Col } from "antd";
-
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
@@ -13,14 +12,61 @@ const Register = () => {
   const [gender, setGender] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
+  const [tableData, setTableData] = useState([]);
 
   const handleSubmit = (values) => {
-    console.log("Received values of form: ", values);
+    // Extracting the form data from the values object
+    const formData = {
+      name: values.name,
+      email: values.email,
+      age: values.age,
+      gender: values.gender,
+      phoneNumber: values.phone,
+      address: values.address,
+    };
+
+    // Updating the tableData state
+    setTableData([...tableData, formData]);
+    console.log("Received values of form: ", formData);
   };
 
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "Gender",
+      dataIndex: "gender",
+      key: "gender",
+    },
+    {
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+  ];
+
   return (
-    <div className="container">
+    <div className="form-container">
       <Form onFinish={handleSubmit} layout="vertical">
+        <h1 className="form-title">Register</h1>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
@@ -28,7 +74,11 @@ const Register = () => {
               name="name"
               rules={[{ required: true, message: "Please input your name!" }]}
             >
-              <Input value={name} onChange={(e) => setName(e.target.value)} />
+              <Input
+                className="input-field"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -38,6 +88,7 @@ const Register = () => {
               rules={[{ required: true, message: "Please input your email!" }]}
             >
               <Input
+                className="input-field"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -53,6 +104,7 @@ const Register = () => {
               rules={[{ required: true, message: "Please input your age!" }]}
             >
               <Input
+                className="input-field"
                 type="number"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
@@ -67,7 +119,11 @@ const Register = () => {
                 { required: true, message: "Please select your gender!" },
               ]}
             >
-              <Select value={gender} onChange={(value) => setGender(value)}>
+              <Select
+                className="form-select"
+                value={gender}
+                onChange={(value) => setGender(value)}
+              >
                 <Option value="male">Male</Option>
                 <Option value="female">Female</Option>
                 <Option value="other">Other</Option>
@@ -101,6 +157,7 @@ const Register = () => {
               ]}
             >
               <Input
+                className="input-field"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
@@ -108,7 +165,7 @@ const Register = () => {
           </Col>
         </Row>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button className="submit-btn" type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
